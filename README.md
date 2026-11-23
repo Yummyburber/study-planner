@@ -1,61 +1,129 @@
 # Study Planner
 
-## Project Overview
+A lightweight student productivity web application for organizing classes, assignment deadlines, and estimated study time.
 
-Study Planner is a web application designed to help college students organize their class schedules, track assignments, and manage their academic workload.
+## MVP features
 
-The goal is to make it easier for students to see upcoming deadlines, understand how much work they have each day, and plan their study time more effectively.
+- Create, edit, and delete classes.
+- Create, edit, and delete assignments.
+- Set due dates, estimated study hours, and optional notes.
+- Associate assignments with classes.
+- Mark assignments complete or reopen them.
+- View upcoming tasks, completed tasks, and remaining estimated study hours.
+- Store application data in SQLite.
 
-## Target Users
+## Technology
 
-College students taking approximately 4–6 classes, especially students who also work part-time and need to balance school responsibilities with other commitments.
+- Frontend: HTML, CSS, vanilla JavaScript
+- Backend: Node.js and Express
+- Database: SQLite using better-sqlite3
+- Containerization: Docker and Docker Compose
 
-## Planned Features
+## Run locally
 
-- **User Accounts:** Students can register, log in, and manage their own information.
-- **Class Scheduling:** Add, edit, and delete recurring weekly classes.
-- **Assignment Tracking:** Create assignments with due dates and associate them with specific classes.
-- **Workload Estimates:** Enter estimated hours needed to complete assignments.
-- **Weekly Dashboard:** View upcoming assignments and estimated daily workloads.
-- **Overload Warnings:** Identify days with unusually high workloads.
-- **AI Study Suggestions:** Receive recommendations for distributing study time based on upcoming deadlines and estimated workloads.
+Requirements: Node.js 20 or newer and npm.
 
-## Technology Stack
+```bash
+cd backend
+npm install
+npm start
+```
 
-| Technology | Purpose |
-|---|---|
-| React | Frontend user interface |
-| Node.js and Express | Backend and API |
-| PostgreSQL | Database |
-| Docker | Application containerization |
-| GitHub Actions | CI/CD automation |
-| Google Cloud Run | Application deployment |
-| Google Cloud SQL | Hosted database |
+Open http://localhost:8080.
 
-## AI Integration
+The SQLite database is created automatically in `backend/data/`.
 
-The application will use AI to analyze upcoming assignments, deadlines, and estimated workloads. Based on this information, it will suggest ways students can distribute their study time throughout the week.
+## Run with Docker
 
-AI recommendations will be suggestions only. Students will remain in control of their schedules.
+Requirements: Docker Desktop.
 
-## Development Plan
+From the repository root:
 
-**Sprint 1 – MVP Development**
-- User registration and login
-- Class schedule management
-- Assignment and deadline tracking
-- Estimated assignment workload
-- Weekly workload dashboard
-- Daily workload calculations
+```bash
+docker compose up --build
+```
 
-**Sprint 2 – Final Project Development**
-- Overloaded day warnings
-- AI study suggestions
-- Docker configuration
-- GitHub Actions CI/CD pipeline
-- Cloud deployment
-- Final testing and bug fixes
+Open http://localhost:8080.
 
-## Project Management
+To stop the application:
 
-Project tasks and development progress are organized in Jira. Project documentation and technology decisions are maintained in
+```bash
+docker compose down
+```
+
+Docker Compose stores database data in a named volume so it survives container restarts.
+
+## API endpoints
+
+| Method | Endpoint | Purpose |
+|---|---|---|
+| GET | `/api/health` | API health check |
+| GET, POST | `/api/classes` | List or create classes |
+| PUT, DELETE | `/api/classes/:id` | Update or delete a class |
+| GET, POST | `/api/assignments` | List or create assignments |
+| PUT, DELETE | `/api/assignments/:id` | Update or delete an assignment |
+| PATCH | `/api/assignments/:id/complete` | Toggle completion |
+
+## Project structure
+
+```text
+study-planner/
+├── Frontend/
+│   ├── index.html
+│   ├── styles.css
+│   └── app.js
+├── backend/
+│   ├── package.json
+│   └── server.js
+├── .dockerignore
+├── .gitignore
+├── Dockerfile
+├── docker-compose.yml
+└── README.md
+```
+
+## Current project status
+
+The initial MVP implementation provides class and assignment management, a dashboard summary, a REST API, and SQLite persistence. Testing, deployment, and CI/CD configuration should be recorded as they are completed.
+
+## AI tool usage
+
+AI assistance (ChatGPT) was used to help plan the MVP architecture, generate an initial implementation, draft API routes, prepare Docker configuration, and organize project documentation. The project owner should review, run, test, and understand the generated code before submission. Any additional AI tools used during development should be added here with a description of their contribution.
+
+## Development workflow
+
+Features should be developed on descriptive feature branches, reviewed, and merged into `main` through pull requests. Use clear commit messages that describe the change. Record testing and deployment outcomes in the project documentation.
+
+## Google Cloud Deployment
+
+**Live Application:** https://study-planner-1053304824393.us-central1.run.app
+
+The Study Planner MVP was successfully deployed using Google Cloud Run in the `us-central1` region.
+
+### Deployment Process
+1. Created the Google Cloud project `study-planner-mvp-2026`.
+2. Linked a Google Cloud billing account.
+3. Enabled Cloud Run, Cloud Build, and Artifact Registry.
+4. Built and deployed the application using the Google Cloud CLI.
+5. Verified that the live application loads and supports adding classes, adding assignments, and marking assignments complete.
+
+### Deployment Challenge
+Google Cloud initially blocked service activation because billing was not linked. After linking the billing account, deployment completed successfully.
+
+## AI Development Assistance
+
+ChatGPT assisted with MVP architecture, initial code generation, API routes, Docker configuration, troubleshooting, and deployment. The application was tested locally, in Docker, and on Google Cloud Run.
+
+## Continuous Integration (GitHub Actions)
+
+A GitHub Actions workflow was added at `.github/workflows/ci.yml`.
+
+The workflow automatically runs when code is pushed to the `main` or `feature/mvp-foundation` branches or when a pull request targets `main`.
+
+### Automated Checks
+1. Checks out the repository.
+2. Sets up Node.js 22.
+3. Installs backend dependencies.
+4. Checks the backend JavaScript syntax.
+
+The workflow was successfully executed through GitHub Actions, and the latest run passed.
