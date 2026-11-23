@@ -113,3 +113,17 @@ Google Cloud initially blocked service activation because billing was not linked
 ## AI Development Assistance
 
 ChatGPT assisted with MVP architecture, initial code generation, API routes, Docker configuration, troubleshooting, and deployment. The application was tested locally, in Docker, and on Google Cloud Run.
+
+## Continuous Integration (GitHub Actions)
+
+A GitHub Actions workflow was added at `.github/workflows/ci.yml`.
+
+The workflow automatically runs when code is pushed to the `main` or `feature/mvp-foundation` branches or when a pull request targets `main`.
+
+### Automated Checks
+1. Checks out the repository.
+2. Sets up Node.js 22.
+3. Installs backend dependencies.
+4. Checks the backend JavaScript syntax.
+
+The workflow was successfully executed through GitHub Actions, and the latest run passed.
