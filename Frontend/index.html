@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="A simple planner for classes, assignments, and study time.">
+  <title>Study Planner</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a class="brand" href="#" aria-label="Study Planner home">
+        <span class="brand-mark">S</span>
+        <span>Study<span class="brand-light">Planner</span></span>
+      </a>
+      <p class="sidebar-label">WORKSPACE</p>
+      <nav>
+        <a class="nav-link active" href="#dashboard"><span>▦</span> Dashboard</a>
+        <a class="nav-link" href="#assignments"><span>✓</span> Assignments</a>
+        <a class="nav-link" href="#classes"><span>▤</span> My classes</a>
+      </nav>
+      <div class="sidebar-note">
+        <div class="note-icon">✦</div>
+        <strong>Small steps add up.</strong>
+        <p>Keep your tasks organized and make time for what matters.</p>
+      </div>
+      <div class="sidebar-footer">STUDY PLANNER MVP</div>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar">
+        <div><span class="eyebrow">YOUR PERSONAL WORKSPACE</span><h1 id="greeting">Your study overview</h1></div>
+        <div class="today-pill" id="today-label"></div>
+      </header>
+
+      <section class="welcome-panel" id="dashboard">
+        <div>
+          <span class="welcome-kicker">A LITTLE PROGRESS EVERY DAY</span>
+          <h2>Make room for<br><em>your best work.</em></h2>
+          <p>Keep track of your classes, stay ahead of deadlines, and plan your study time.</p>
+          <button class="button button-light" id="welcome-add">＋ Add an assignment</button>
+        </div>
+        <div class="welcome-art" aria-hidden="true">
+          <div class="art-circle"></div><div class="art-card"><span>THIS WEEK</span><strong>One task<br>at a time.</strong><div class="art-lines"><i></i><i></i><i></i></div></div>
+          <div class="art-star">✳</div>
+        </div>
+      </section>
+
+      <section class="stats-grid" aria-label="Study statistics">
+        <article class="stat-card"><div class="stat-top"><span>Upcoming tasks</span><span class="stat-icon purple">▣</span></div><strong id="stat-upcoming">0</strong><small>Not completed yet</small></article>
+        <article class="stat-card"><div class="stat-top"><span>Study hours</span><span class="stat-icon orange">◷</span></div><strong id="stat-hours">0h</strong><small>Estimated remaining time</small></article>
+        <article class="stat-card"><div class="stat-top"><span>Completed</span><span class="stat-icon green">✓</span></div><strong id="stat-completed">0</strong><small>Tasks checked off</small></article>
+      </section>
+
+      <section class="content-grid">
+        <div class="panel assignments-panel" id="assignments">
+          <div class="panel-heading"><div><span class="eyebrow">STAY ON TRACK</span><h2>Upcoming assignments</h2></div><button class="button button-primary" id="add-assignment">＋ New assignment</button></div>
+          <div class="filter-row"><span>Your task list</span><select id="assignment-filter" aria-label="Filter assignments"><option value="all">All tasks</option><option value="open">In progress</option><option value="completed">Completed</option></select></div>
+          <div id="assignment-list" class="assignment-list"><div class="empty-state">Loading your assignments…</div></div>
+        </div>
+        <div class="right-column">
+          <div class="panel classes-panel" id="classes">
+            <div class="panel-heading"><div><span class="eyebrow">YOUR COURSES</span><h2>My classes</h2></div><button class="icon-button" id="add-class" aria-label="Add class">＋</button></div>
+            <div id="class-list" class="class-list"><div class="empty-state">No classes added yet.</div></div>
+          </div>
+          <div class="tip-panel"><span>✦ A STUDY TIP</span><p>Break a big assignment into smaller tasks. Starting is easier when the first step is clear.</p></div>
+        </div>
+      </section>
+      <footer>Made to help you focus on what matters. <span>STUDY PLANNER</span></footer>
+    </main>
+  </div>
+
+  <dialog id="assignment-dialog" class="modal">
+    <form id="assignment-form">
+      <div class="modal-heading"><div><span class="eyebrow">TASK DETAILS</span><h2 id="assignment-modal-title">Add an assignment</h2></div><button type="button" class="icon-button close-dialog" aria-label="Close">×</button></div>
+      <input type="hidden" id="assignment-id">
+      <label>Assignment name<input id="assignment-title" required maxlength="120" placeholder="e.g. Research paper draft"></label>
+      <div class="form-row"><label>Class<select id="assignment-class"><option value="">No class selected</option></select></label><label>Due date<input id="assignment-due" type="date" required></label></div>
+      <label>Estimated study hours<input id="assignment-hours" type="number" min="0" step="0.5" value="1" required></label>
+      <label>Notes <span class="optional">(optional)</span><textarea id="assignment-notes" rows="3" placeholder="What do you need to remember?"></textarea></label>
+      <p class="form-error" id="assignment-error"></p>
+      <div class="modal-actions"><button type="button" class="button button-muted close-dialog">Cancel</button><button class="button button-primary" type="submit">Save assignment</button></div>
+    </form>
+  </dialog>
+
+  <dialog id="class-dialog" class="modal">
+    <form id="class-form">
+      <div class="modal-heading"><div><span class="eyebrow">COURSE DETAILS</span><h2 id="class-modal-title">Add a class</h2></div><button type="button" class="icon-button close-dialog" aria-label="Close">×</button></div>
+      <input type="hidden" id="class-id">
+      <label>Class name<input id="class-name" required maxlength="100" placeholder="e.g. Introduction to Psychology"></label>
+      <label>Instructor <span class="optional">(optional)</span><input id="class-instructor" placeholder="Instructor name"></label>
+      <label>Class color<input id="class-color" type="color" value="#647bff"></label>
+      <p class="form-error" id="class-error"></p>
+      <div class="modal-actions"><button type="button" class="button button-muted close-dialog">Cancel</button><button class="button button-primary" type="submit">Save class</button></div>
+    </form>
+  </dialog>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="app.js"></script>
+</body>
+</html>

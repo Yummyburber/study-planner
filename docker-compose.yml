@@ -1,0 +1,15 @@
+services:
+  study-planner:
+    build: .
+    container_name: study-planner
+    ports:
+      - "8080:8080"
+    environment:
+      PORT: 8080
+      DATA_DIRECTORY: /app/data
+    volumes:
+      - study-planner-data:/app/data
+    restart: unless-stopped
+
+volumes:
+  study-planner-data:
